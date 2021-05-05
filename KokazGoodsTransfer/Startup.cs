@@ -17,6 +17,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using LMSbackend.Models;
 
 namespace KokazGoodsTransfer
 {
@@ -38,7 +39,7 @@ namespace KokazGoodsTransfer
             services.AddControllers();
             //services.AddDbContext<KokazContext>(options => options.UseSqlServer(Configuration.GetConnectionString("plesk")));
             //services.AddDbContext<KokazContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Online")));
-            //services.AddDbContext<KokazContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Local")));
+            services.AddDbContext<LmsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Local")));
             //services.AddTransient(typeof(KokazContext), typeof(KokazContext));
             services.AddCors(options =>
             {

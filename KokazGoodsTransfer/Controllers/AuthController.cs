@@ -20,6 +20,7 @@ namespace LMSbackend.Controllers
         public AuthController(LmsContext context, IMapper mapper) : base(context, mapper)
         {
         }
+        [HttpPost]
 
         public IActionResult Auth([FromBody] AuthDto authDto)
         {
