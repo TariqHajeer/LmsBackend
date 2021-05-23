@@ -18,6 +18,9 @@ namespace LMSbackend.Models
         }
 
         public virtual DbSet<Ad> Ads { get; set; }
+        public virtual DbSet<Exam> Exams { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<StudentAnswer> StudentAnswers { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,6 +43,61 @@ namespace LMSbackend.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Exam>(entity =>
+            {
+                entity.ToTable("Exam");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Pwassowrd).IsRequired();
+
+                entity.Property(e => e.Title).IsRequired();
+            });
+
+            modelBuilder.Entity<Question>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Choise1).IsRequired();
+
+                entity.Property(e => e.Choise2).IsRequired();
+
+                entity.Property(e => e.Choise3).IsRequired();
+
+                entity.Property(e => e.Choise4).IsRequired();
+
+                entity.Property(e => e.Correct).IsRequired();
+
+                entity.Property(e => e.Question1)
+                    .IsRequired()
+                    .HasColumnName("Question");
+
+                entity.HasOne(d => d.Exam)
+                    .WithMany(p => p.Questions)
+                    .HasForeignKey(d => d.ExamId)
+                    .HasConstraintName("FK_Questions_Exam");
+            });
+
+            modelBuilder.Entity<StudentAnswer>(entity =>
+            {
+                entity.HasKey(e => new { e.StudentId, e.QuestionId })
+                    .HasName("PK_Student_Answers");
+
+                entity.Property(e => e.Answer).IsRequired();
+
+                entity.HasOne(d => d.Question)
+                    .WithMany(p => p.StudentAnswers)
+                    .HasForeignKey(d => d.QuestionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StudentAnswers_Questions1");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.StudentAnswers)
+                    .HasForeignKey(d => d.StudentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StudentAnswers_User");
             });
 
             modelBuilder.Entity<User>(entity =>
