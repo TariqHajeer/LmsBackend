@@ -33,6 +33,7 @@ namespace LMSbackend.Controllers
                     Date = item.Date,
                     Id = item.Id,
                 };
+                te.Questions = new List<GetQuestionDto>();
                 foreach (var q in item.Questions)
                 {
                     te.Questions.Add(new GetQuestionDto()
@@ -82,8 +83,9 @@ namespace LMSbackend.Controllers
                         Question1 = item.Question
                     };
                     this.Context.Add(question);
+                    this.Context.SaveChanges();
                 }
-                this.Context.SaveChanges();
+                transacrtion.Commit();
                 return Ok();
             }
             catch(Exception ex)

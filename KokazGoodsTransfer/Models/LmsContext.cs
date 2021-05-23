@@ -58,8 +58,6 @@ namespace LMSbackend.Models
 
             modelBuilder.Entity<Question>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Choise1).IsRequired();
 
                 entity.Property(e => e.Choise2).IsRequired();
