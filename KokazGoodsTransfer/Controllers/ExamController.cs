@@ -53,6 +53,7 @@ namespace LMSbackend.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateExamDto createExamDto)
         {
+            var transacrtion = this.Context.Database.BeginTransaction();
             try
             {
                 DateTime d;
@@ -67,6 +68,7 @@ namespace LMSbackend.Controllers
                     Pwassowrd = ""
                 };
                 this.Context.Add(exam);
+                this.Context.SaveChanges();
                 foreach (var item in createExamDto.Quetions)
                 {
                     Question question = new Question()
@@ -86,6 +88,7 @@ namespace LMSbackend.Controllers
             }
             catch(Exception ex)
             {
+                transacrtion.Rollback();
                 return Conflict(ex.Message);
             }
         }
