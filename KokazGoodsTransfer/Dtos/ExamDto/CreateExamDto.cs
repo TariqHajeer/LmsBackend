@@ -8,7 +8,7 @@ namespace LMSbackend.Dtos.ExamDto
     public class CreateExamDto
     {
         public string Title { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public List<CreateQuestionDto> Quetions { get; set; }
     }
     public class CreateQuestionDto

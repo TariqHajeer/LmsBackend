@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [Lms]    Script Date: 5/5/2021 5:17:42 AM ******/
+/****** Object:  Database [Lms]    Script Date: 5/23/2021 8:49:55 AM ******/
 CREATE DATABASE [Lms]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,7 +77,7 @@ EXEC sys.sp_db_vardecimal_storage_format N'Lms', N'ON'
 GO
 USE [Lms]
 GO
-/****** Object:  Table [dbo].[Ads]    Script Date: 5/5/2021 5:17:44 AM ******/
+/****** Object:  Table [dbo].[Ads]    Script Date: 5/23/2021 8:49:55 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,59 @@ CREATE TABLE [dbo].[Ads](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 5/5/2021 5:17:44 AM ******/
+/****** Object:  Table [dbo].[Exam]    Script Date: 5/23/2021 8:49:55 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Exam](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](max) NOT NULL,
+	[Date] [datetime] NOT NULL,
+	[Pwassowrd] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Exam] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Questions]    Script Date: 5/23/2021 8:49:55 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Questions](
+	[Id] [int] NOT NULL,
+	[ExamId] [int] NOT NULL,
+	[Question] [nvarchar](max) NOT NULL,
+	[Choise1] [nvarchar](max) NOT NULL,
+	[Choise2] [nvarchar](max) NOT NULL,
+	[Choise3] [nvarchar](max) NOT NULL,
+	[Choise4] [nvarchar](max) NOT NULL,
+	[Correct] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Questions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 5/23/2021 8:49:55 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[StudentAnswers](
+	[StudentId] [int] NOT NULL,
+	[QuestionId] [int] NOT NULL,
+	[Answer] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Student_Answers] PRIMARY KEY CLUSTERED 
+(
+	[StudentId] ASC,
+	[QuestionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 5/23/2021 8:49:55 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,6 +162,26 @@ CREATE TABLE [dbo].[User](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[User] ON 
+
+INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (1, N'سعد محسن', N'SaidMohsen', N'SaidMohsen123', 1)
+SET IDENTITY_INSERT [dbo].[User] OFF
+ALTER TABLE [dbo].[Questions]  WITH CHECK ADD  CONSTRAINT [FK_Questions_Exam] FOREIGN KEY([ExamId])
+REFERENCES [dbo].[Exam] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Questions] CHECK CONSTRAINT [FK_Questions_Exam]
+GO
+ALTER TABLE [dbo].[StudentAnswers]  WITH CHECK ADD  CONSTRAINT [FK_StudentAnswers_Questions1] FOREIGN KEY([QuestionId])
+REFERENCES [dbo].[Questions] ([Id])
+GO
+ALTER TABLE [dbo].[StudentAnswers] CHECK CONSTRAINT [FK_StudentAnswers_Questions1]
+GO
+ALTER TABLE [dbo].[StudentAnswers]  WITH CHECK ADD  CONSTRAINT [FK_StudentAnswers_User] FOREIGN KEY([StudentId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[StudentAnswers] CHECK CONSTRAINT [FK_StudentAnswers_User]
 GO
 USE [master]
 GO

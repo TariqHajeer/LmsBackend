@@ -8,6 +8,7 @@ using LMSbackend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+    
 namespace LMSbackend.Controllers
 {
     [Route("api/[controller]")]
@@ -52,29 +53,41 @@ namespace LMSbackend.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateExamDto createExamDto)
         {
-            Exam exam = new Exam()
+            try
             {
-                Date = createExamDto.Date,
-                Title = createExamDto.Title,
-                Pwassowrd = ""
-            };
-            this.Context.Add(exam);
-            foreach (var item in createExamDto.Quetions)
-            {
-                Question question = new Question()
+                DateTime d;
+                if (createExamDto.Date == null)
+                    d = DateTime.Now;
+                else
+                    d = (DateTime)createExamDto.Date;
+                Exam exam = new Exam()
                 {
-                    ExamId = exam.Id,
-                    Choise1 = item.Choise1,
-                    Choise2 = item.Choise2,
-                    Choise3 = item.Choise3,
-                    Choise4 = item.Choise4,
-                    Correct = item.Correct,
-                    Question1 = item.Question
+                    Date = d,
+                    Title = createExamDto.Title,
+                    Pwassowrd = ""
                 };
-                this.Context.Add(question);
+                this.Context.Add(exam);
+                foreach (var item in createExamDto.Quetions)
+                {
+                    Question question = new Question()
+                    {
+                        ExamId = exam.Id,
+                        Choise1 = item.Choise1,
+                        Choise2 = item.Choise2,
+                        Choise3 = item.Choise3,
+                        Choise4 = item.Choise4,
+                        Correct = item.Correct,
+                        Question1 = item.Question
+                    };
+                    this.Context.Add(question);
+                }
+                this.Context.SaveChanges();
+                return Ok();
             }
-            this.Context.SaveChanges();
-            return Ok();
+            catch(Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
