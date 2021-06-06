@@ -138,7 +138,7 @@ namespace LMSbackend.Controllers
             }
             return Ok(examStudentDto );
         }
-        [HttpPut("Answer")]
+        [HttpPost("Answer")]
         public IActionResult Answer([FromBody]List<AnswerQuestion> answerQuestion)
         {
             foreach (var item in answerQuestion)
