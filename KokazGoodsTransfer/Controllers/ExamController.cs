@@ -114,8 +114,23 @@ namespace LMSbackend.Controllers
             {
                 Id = exam.Id,
                 Title = exam.Title,
-                Date = exam.Date
+                Date = exam.Date,
+                
             };
+            foreach (var item in exam.Questions)
+            {
+                examStudentDto.Question.Add(new GetQuestionStudnetDto()
+                {
+                    Id = item.Id,
+                    Choise1 = item.Choise1,
+                    Choise2 = item.Choise2,
+                    Choise3 = item.Choise3,
+                    Choise4 = item.Choise4,
+                    Question = item.Question1,
+                    Time = item.Time
+                });
+            }
+
             return Ok(new { IsExam = true, Exam = examStudentDto });
         }
         [HttpPut("Answer")]
