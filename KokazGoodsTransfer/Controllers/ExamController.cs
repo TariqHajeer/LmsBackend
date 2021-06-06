@@ -106,7 +106,7 @@ namespace LMSbackend.Controllers
         [HttpGet("GetCurrentExamForStudent")]
         public IActionResult GetCurrentExamForStudent([FromBody] DateTimeDto dateTimedto)
         {
-            var dateTiem = dateTimedto.Date;
+            var dateTime = dateTimedto.Date;
             var exams = this.Context.Exams.ToList();
             var exam = exams.Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c => c.Date).FirstOrDefault();
             if (exam == null)
