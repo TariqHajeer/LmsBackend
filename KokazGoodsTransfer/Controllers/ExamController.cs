@@ -110,8 +110,7 @@ namespace LMSbackend.Controllers
             var exams = this.Context.Exams
                 .Include(c=>c.Questions)
                 .ToList();
-            var exam = exams
-                
+            var exam = exams   
                 .Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c => c.Date)
                 .FirstOrDefault();
             if (exam == null)
@@ -121,6 +120,7 @@ namespace LMSbackend.Controllers
                 Id = exam.Id,
                 Title = exam.Title,
                 Date = exam.Date,
+                Question = new List<GetQuestionStudnetDto>()
                 
             };
             foreach (var item in exam.Questions)
@@ -136,8 +136,7 @@ namespace LMSbackend.Controllers
                     Time = item.Time
                 });
             }
-
-            return Ok(new { IsExam = true, Exam = examStudentDto });
+            return Ok(examStudentDto );
         }
         [HttpPut("Answer")]
         public IActionResult Answer([FromBody]List<AnswerQuestion> answerQuestion)
