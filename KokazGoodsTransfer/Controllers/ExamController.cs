@@ -104,12 +104,13 @@ namespace LMSbackend.Controllers
             return Ok();
         }
         [HttpGet("GetCurrentExamForStudent")]
-        public IActionResult GetCurrentExamForStudent([FromBody] DateTime dateTime)
+        public IActionResult GetCurrentExamForStudent([FromBody] DateTimeDto dateTimedto)
         {
+            var dateTiem = dateTimedto.Date;
             var exams = this.Context.Exams.ToList();
             var exam = exams.Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c => c.Date).FirstOrDefault();
             if (exam == null)
-                return Ok(new { IsExam = false });
+                 return Ok(false);
             ExamStudentDto examStudentDto = new ExamStudentDto()
             {
                 Id = exam.Id,
@@ -134,15 +135,20 @@ namespace LMSbackend.Controllers
             return Ok(new { IsExam = true, Exam = examStudentDto });
         }
         [HttpPut("Answer")]
-        public IActionResult Answer([FromBody]AnswerQuestion answerQuestion)
+        public IActionResult Answer([FromBody]List<AnswerQuestion> answerQuestion)
         {
-            StudentAnswer sa = new StudentAnswer()
+            foreach (var item in answerQuestion)
             {
-                Answer = answerQuestion.Answer,
-                QuestionId = answerQuestion.Id,
-                //StudentId =User.
-            };
-            //this.Context.
+                StudentAnswer sa = new StudentAnswer()
+                {
+                    Answer = item.Answer,
+                    QuestionId = item.Id,
+
+                };
+                this.Context.Add(sa);
+
+            }
+            this.Context.SaveChanges();
             return Ok();
         }
 
