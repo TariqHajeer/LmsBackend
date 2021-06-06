@@ -108,13 +108,15 @@ namespace LMSbackend.Controllers
         {
             var exams = this.Context.Exams.ToList();
             var exam = exams.Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c=>c.Date).FirstOrDefault();
-            if (dateTime.Hour == exam.Date.Hour)
+            if(exam==null)
+                return Ok(new { IsExam = false });
+            ExamStudentDto examStudentDto = new ExamStudentDto()
             {
-
-                return Ok(new { IsExam = true});
-            }
-
-            return Ok(new  { IsExam = false});
+                Id = exam.Id,
+                Title = exam.Title,
+                Date = exam.Date
+            };
+            return Ok(examStudentDto);
         }
         [HttpPut("Answer")]
         public IActionResult Answer([FromBody]AnswerQuestion answerQuestion)
