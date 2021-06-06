@@ -8,7 +8,7 @@ using LMSbackend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-    
+
 namespace LMSbackend.Controllers
 {
     [Route("api/[controller]")]
@@ -18,10 +18,10 @@ namespace LMSbackend.Controllers
         public ExamController(LmsContext context, IMapper mapper) : base(context, mapper)
         {
         }
-        [HttpGet]   
+        [HttpGet]
         public IActionResult Get()
         {
-            var question= this.Context.Exams
+            var question = this.Context.Exams
                 .Include(c => c.Questions);
 
             List<GetExamDto> getExamDtos = new List<GetExamDto>();
@@ -89,7 +89,7 @@ namespace LMSbackend.Controllers
                 transacrtion.Commit();
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 transacrtion.Rollback();
                 return Conflict(ex.Message);
@@ -107,8 +107,8 @@ namespace LMSbackend.Controllers
         public IActionResult GetCurrentExamForStudent([FromBody] DateTime dateTime)
         {
             var exams = this.Context.Exams.ToList();
-            var exam = exams.Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c=>c.Date).FirstOrDefault();
-            if(exam==null)
+            var exam = exams.Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c => c.Date).FirstOrDefault();
+            if (exam == null)
                 return Ok(new { IsExam = false });
             ExamStudentDto examStudentDto = new ExamStudentDto()
             {
@@ -116,7 +116,7 @@ namespace LMSbackend.Controllers
                 Title = exam.Title,
                 Date = exam.Date
             };
-            return Ok(examStudentDto);
+            return Ok(new { IsExam = true, Exam = examStudentDto });
         }
         [HttpPut("Answer")]
         public IActionResult Answer([FromBody]AnswerQuestion answerQuestion)
