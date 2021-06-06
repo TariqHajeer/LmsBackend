@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [Lms]    Script Date: 5/23/2021 8:49:55 AM ******/
+/****** Object:  Database [Lms]    Script Date: 6/6/2021 2:53:47 PM ******/
 CREATE DATABASE [Lms]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,7 +77,7 @@ EXEC sys.sp_db_vardecimal_storage_format N'Lms', N'ON'
 GO
 USE [Lms]
 GO
-/****** Object:  Table [dbo].[Ads]    Script Date: 5/23/2021 8:49:55 AM ******/
+/****** Object:  Table [dbo].[Ads]    Script Date: 6/6/2021 2:53:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ CREATE TABLE [dbo].[Ads](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exam]    Script Date: 5/23/2021 8:49:55 AM ******/
+/****** Object:  Table [dbo].[Exam]    Script Date: 6/6/2021 2:53:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,13 +110,13 @@ CREATE TABLE [dbo].[Exam](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 5/23/2021 8:49:55 AM ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 6/6/2021 2:53:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Questions](
-	[Id] [int] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ExamId] [int] NOT NULL,
 	[Question] [nvarchar](max) NOT NULL,
 	[Choise1] [nvarchar](max) NOT NULL,
@@ -124,13 +124,14 @@ CREATE TABLE [dbo].[Questions](
 	[Choise3] [nvarchar](max) NOT NULL,
 	[Choise4] [nvarchar](max) NOT NULL,
 	[Correct] [nvarchar](max) NOT NULL,
+	[Time] [int] NOT NULL,
  CONSTRAINT [PK_Questions] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 5/23/2021 8:49:55 AM ******/
+/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 6/6/2021 2:53:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +147,7 @@ CREATE TABLE [dbo].[StudentAnswers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 5/23/2021 8:49:55 AM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 6/6/2021 2:53:48 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -166,6 +167,7 @@ GO
 SET IDENTITY_INSERT [dbo].[User] ON 
 
 INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (1, N'سعد محسن', N'SaidMohsen', N'SaidMohsen123', 1)
+INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (2, N'طالب 1', N'student1', N'123', 0)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ALTER TABLE [dbo].[Questions]  WITH CHECK ADD  CONSTRAINT [FK_Questions_Exam] FOREIGN KEY([ExamId])
 REFERENCES [dbo].[Exam] ([Id])

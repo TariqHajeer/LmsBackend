@@ -10,5 +10,6 @@ namespace LMSbackend.Dtos.AdsDto
         public string Name { get; set; }
         public string Desc { get; set; }
         public string Link { get; set; }
+        public DateTime Date { get; set; }
     }
 }

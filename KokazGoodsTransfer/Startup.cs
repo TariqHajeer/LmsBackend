@@ -37,8 +37,8 @@ namespace KokazGoodsTransfer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<LmsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Online")));
-            //services.AddDbContext<LmsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Local")));
+            //services.AddDbContext<LmsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Online2")));
+            services.AddDbContext<LmsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Local")));
             //services.AddTransient(typeof(KokazContext), typeof(KokazContext));
             services.AddCors(options =>
             {

@@ -19,5 +19,6 @@ namespace LMSbackend.Dtos.ExamDto
         public string Choise3 { get; set; }
         public string Choise4 { get; set; }
         public string Correct { get; set; }
+        public int Time { get; set; }
     }
 }

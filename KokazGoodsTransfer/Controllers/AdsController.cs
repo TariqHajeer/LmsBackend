@@ -22,7 +22,7 @@ namespace LMSbackend.Controllers
         {
             Ad ad = new Ad()
             {
-                CreateDate = DateTime.Now,
+                CreateDate = createAds.Date,
                 Description = createAds.Desc,
                 Link = createAds.Link,
                 Name = createAds.Name

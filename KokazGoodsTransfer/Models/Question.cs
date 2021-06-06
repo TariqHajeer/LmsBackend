@@ -20,6 +20,7 @@ namespace LMSbackend.Models
         public string Choise3 { get; set; }
         public string Choise4 { get; set; }
         public string Correct { get; set; }
+        public int Time { get; set; }
 
         public virtual Exam Exam { get; set; }
         public virtual ICollection<StudentAnswer> StudentAnswers { get; set; }

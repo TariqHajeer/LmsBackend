@@ -80,7 +80,8 @@ namespace LMSbackend.Controllers
                         Choise3 = item.Choise3,
                         Choise4 = item.Choise4,
                         Correct = item.Correct,
-                        Question1 = item.Question
+                        Question1 = item.Question,
+                        Time = item.Time
                     };
                     this.Context.Add(question);
                     this.Context.SaveChanges();
@@ -101,6 +102,19 @@ namespace LMSbackend.Controllers
             this.Context.Remove(exam);
             this.Context.SaveChanges();
             return Ok();
+        }
+        [HttpGet("GetCurrentExamForStudent")]
+        public IActionResult GetCurrentExamForStudent([FromBody] DateTime dateTime)
+        {
+            var exams = this.Context.Exams.ToList();
+            var exam = exams.Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c=>c.Date).FirstOrDefault();
+            if (dateTime.Hour == exam.Date.Hour)
+            {
+
+                return Ok(new { IsExam = true});
+            }
+
+            return Ok(new  { IsExam = false});
         }
         [HttpPut("Answer")]
         public IActionResult Answer([FromBody]AnswerQuestion answerQuestion)
