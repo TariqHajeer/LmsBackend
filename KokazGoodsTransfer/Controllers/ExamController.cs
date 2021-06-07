@@ -103,8 +103,8 @@ namespace LMSbackend.Controllers
             this.Context.SaveChanges();
             return Ok();
         }
-        [HttpPost("GetCurrentExamForStudent")]
-        public IActionResult GetCurrentExamForStudent([FromBody] DateTimeDto dateTimedto)
+        [HttpGet("GetCurrentExamForStudent")]
+        public IActionResult GetCurrentExamForStudent([FromQuery] DateTimeDto dateTimedto)
         {
             var dateTime = new DateTime(dateTimedto.Year, dateTimedto.Month, dateTimedto.Day, dateTimedto.Hour, dateTimedto.Minit,0);
             var exams = this.Context.Exams
