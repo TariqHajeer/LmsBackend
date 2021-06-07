@@ -136,10 +136,10 @@ namespace LMSbackend.Controllers
                     Time = item.Time
                 });
             }
-            var y = examStudentDto.Question;
+            var questions = examStudentDto.Question;
             examStudentDto.Question = null;
 
-            return Ok(new  { examStudentDto, Question  = y});
+            return Ok(new  { examStudentDto, questions });
         }
         [HttpPost("Answer")]
         public IActionResult Answer([FromBody]List<AnswerQuestion> answerQuestion)
