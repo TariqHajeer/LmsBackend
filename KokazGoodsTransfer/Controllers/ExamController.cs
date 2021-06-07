@@ -137,8 +137,6 @@ namespace LMSbackend.Controllers
                 });
             }
             var questions = examStudentDto.Question;
-            examStudentDto.Question = null;
-
             return Ok(new  { examStudentDto, questions });
         }
         [HttpPost("Answer")]
