@@ -9,6 +9,7 @@ namespace LMSbackend.Models
     {
         public User()
         {
+            HomeWorks = new HashSet<HomeWork>();
             StudentAnswers = new HashSet<StudentAnswer>();
         }
 
@@ -18,6 +19,7 @@ namespace LMSbackend.Models
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
 
+        public virtual ICollection<HomeWork> HomeWorks { get; set; }
         public virtual ICollection<StudentAnswer> StudentAnswers { get; set; }
     }
 }

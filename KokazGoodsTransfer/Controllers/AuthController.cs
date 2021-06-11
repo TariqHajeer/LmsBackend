@@ -10,7 +10,7 @@ using LMSbackend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-
+using System.Security.Claims;
 namespace LMSbackend.Controllers
 {
     [Route("api/[controller]")]
@@ -29,10 +29,13 @@ namespace LMSbackend.Controllers
                 return NotFound();
             else
             {
+                var climes = new List<Claim>();
+                climes.Add(new Claim("UserID", user.Id.ToString()));
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Expires = DateTime.UtcNow.AddDays(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authnetication")), SecurityAlgorithms.HmacSha256Signature)
+                    Expires = DateTime.UtcNow.AddDays(99999),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authnetication")), SecurityAlgorithms.HmacSha256Signature),
+                    Subject = new ClaimsIdentity(climes)
                 };
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);

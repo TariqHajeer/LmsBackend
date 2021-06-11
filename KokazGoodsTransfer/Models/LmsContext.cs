@@ -19,6 +19,7 @@ namespace LMSbackend.Models
 
         public virtual DbSet<Ad> Ads { get; set; }
         public virtual DbSet<Exam> Exams { get; set; }
+        public virtual DbSet<HomeWork> HomeWorks { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<StudentAnswer> StudentAnswers { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -54,6 +55,18 @@ namespace LMSbackend.Models
                 entity.Property(e => e.Pwassowrd).IsRequired();
 
                 entity.Property(e => e.Title).IsRequired();
+            });
+
+            modelBuilder.Entity<HomeWork>(entity =>
+            {
+                entity.ToTable("HomeWork");
+
+                entity.Property(e => e.Note).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.HomeWorks)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_HomeWork_User");
             });
 
             modelBuilder.Entity<Question>(entity =>

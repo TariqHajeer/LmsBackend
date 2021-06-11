@@ -106,22 +106,22 @@ namespace LMSbackend.Controllers
         [HttpGet("GetCurrentExamForStudent")]
         public IActionResult GetCurrentExamForStudent([FromQuery] DateTimeDto dateTimedto)
         {
-            var dateTime = new DateTime(dateTimedto.Year, dateTimedto.Month, dateTimedto.Day, dateTimedto.Hour, dateTimedto.Minit,0);
+            var dateTime = new DateTime(dateTimedto.Year, dateTimedto.Month, dateTimedto.Day, dateTimedto.Hour, dateTimedto.Minit, 0);
             var exams = this.Context.Exams
-                .Include(c=>c.Questions)
+                .Include(c => c.Questions)
                 .ToList();
-            var exam = exams   
+            var exam = exams
                 .Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c => c.Date)
                 .FirstOrDefault();
             if (exam == null)
-                 return Ok(false);
+                return Ok(false);
             ExamStudentDto examStudentDto = new ExamStudentDto()
             {
                 Id = exam.Id,
                 Title = exam.Title,
                 Date = exam.Date,
                 Question = new List<GetQuestionStudnetDto>()
-                
+
             };
             foreach (var item in exam.Questions)
             {
@@ -137,21 +137,21 @@ namespace LMSbackend.Controllers
                 });
             }
             var questions = examStudentDto.Question;
-            return Ok(new  { examStudentDto, questions });
+            return Ok(new { examStudentDto, questions });
         }
         [HttpPost("Answer")]
         public IActionResult Answer([FromBody]List<AnswerQuestion> answerQuestion)
         {
+            var studnetId = AuthoticateUserId();
             foreach (var item in answerQuestion)
             {
                 StudentAnswer sa = new StudentAnswer()
                 {
                     Answer = item.Answer,
                     QuestionId = item.Id,
-
+                    StudentId = studnetId
                 };
                 this.Context.Add(sa);
-
             }
             this.Context.SaveChanges();
             return Ok();
