@@ -157,5 +157,21 @@ namespace LMSbackend.Controllers
             return Ok();
         }
 
+        [HttpGet("GetAnswers/{{id}")]
+        public IActionResult GetAnswers(int id)
+        {
+            var exam = this.Context.Exams
+                .Include(c => c.Questions)
+                    .ThenInclude(c => c.StudentAnswers)
+                        .ThenInclude(c => c.Student)
+                        .First(c => c.Id == id);
+
+            foreach (var item in exam.Questions)
+            {
+
+            }
+            return Ok();
+        }
+
     }
 }
