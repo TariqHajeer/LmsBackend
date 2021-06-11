@@ -15,7 +15,7 @@ namespace LMSbackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class HomeWorkController : AbstractController
     {
         public HomeWorkController(LmsContext context, IMapper mapper) : base(context, mapper)
@@ -38,16 +38,16 @@ namespace LMSbackend.Controllers
                 Context.Add(c);
                 Context.SaveChanges();
                 var fileName = homeWork.File.FileName.Split('.');
-                
 
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Files",c.Id.ToString()+"."+ fileName[fileName.Length - 1]);
+
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", c.Id.ToString() + "." + fileName[fileName.Length - 1]);
                 var stream = new FileStream(path, FileMode.Create);
                 homeWork.File.CopyToAsync(stream);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { ex.Message, exI = ex.InnerException.Message });
             }
         }
         [HttpGet]
