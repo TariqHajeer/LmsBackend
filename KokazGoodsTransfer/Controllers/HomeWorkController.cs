@@ -9,6 +9,7 @@ using LMSbackend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMSbackend.Controllers
 {
@@ -46,8 +47,25 @@ namespace LMSbackend.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
+        }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var getHomeWorks = new List<GetHomeWork>();
+            var hs = Context.HomeWorks
+                .Include(c => c.User).ToList();
+            foreach (var item in hs)
+            {
+                getHomeWorks.Add(new GetHomeWork()
+                {
+                    Name = item.User.Name,
+                    Id = item.Id,
+                    Note = item.Note
+                });
+            }
+            return Ok(getHomeWorks);
         }
 
     }

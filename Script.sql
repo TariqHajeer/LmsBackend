@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [Lms]    Script Date: 6/11/2021 9:07:15 PM ******/
+/****** Object:  Database [Lms]    Script Date: 6/11/2021 9:24:21 PM ******/
 CREATE DATABASE [Lms]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,7 +77,7 @@ EXEC sys.sp_db_vardecimal_storage_format N'Lms', N'ON'
 GO
 USE [Lms]
 GO
-/****** Object:  Table [dbo].[Ads]    Script Date: 6/11/2021 9:07:15 PM ******/
+/****** Object:  Table [dbo].[Ads]    Script Date: 6/11/2021 9:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ CREATE TABLE [dbo].[Ads](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exam]    Script Date: 6/11/2021 9:07:16 PM ******/
+/****** Object:  Table [dbo].[Exam]    Script Date: 6/11/2021 9:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,14 +110,13 @@ CREATE TABLE [dbo].[Exam](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[HomeWork]    Script Date: 6/11/2021 9:07:16 PM ******/
+/****** Object:  Table [dbo].[HomeWork]    Script Date: 6/11/2021 9:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[HomeWork](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Path] [nvarchar](max) NULL,
 	[Note] [nvarchar](max) NOT NULL,
 	[UserId] [int] NOT NULL,
  CONSTRAINT [PK_HomeWork] PRIMARY KEY CLUSTERED 
@@ -126,7 +125,7 @@ CREATE TABLE [dbo].[HomeWork](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 6/11/2021 9:07:16 PM ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 6/11/2021 9:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +146,7 @@ CREATE TABLE [dbo].[Questions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 6/11/2021 9:07:16 PM ******/
+/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 6/11/2021 9:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +162,7 @@ CREATE TABLE [dbo].[StudentAnswers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 6/11/2021 9:07:16 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 6/11/2021 9:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
