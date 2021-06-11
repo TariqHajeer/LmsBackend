@@ -43,6 +43,7 @@ namespace LMSbackend.Controllers
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", c.Id.ToString() + "." + fileName[fileName.Length - 1]);
                 var stream = new FileStream(path, FileMode.Create);
                 homeWork.File.CopyToAsync(stream);
+                c.Path = path;
                 return Ok();
             }
             catch (Exception ex)
@@ -58,12 +59,16 @@ namespace LMSbackend.Controllers
                 .Include(c => c.User).ToList();
             foreach (var item in hs)
             {
-                getHomeWorks.Add(new GetHomeWork()
+
+                var x = new GetHomeWork()
                 {
                     Name = item.User.Name,
                     Id = item.Id,
-                    Note = item.Note
-                });
+                    Note = item.Note,
+                    //    File =item.Path  
+                };
+                x.File= Path.Combine(Directory.GetCurrentDirectory(), "Files", item.Path);
+                getHomeWorks.Add(x);
             }
             return Ok(getHomeWorks);
         }
