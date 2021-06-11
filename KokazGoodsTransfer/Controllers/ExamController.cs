@@ -157,7 +157,7 @@ namespace LMSbackend.Controllers
             return Ok();
         }
 
-        [HttpGet("GetAnswers/{{id}")]
+        [HttpGet("GetAnswers/{id}")]
         public IActionResult GetAnswers(int id)
         {
             var exam = this.Context.Exams
@@ -165,10 +165,16 @@ namespace LMSbackend.Controllers
                     .ThenInclude(c => c.StudentAnswers)
                         .ThenInclude(c => c.Student)
                         .First(c => c.Id == id);
-
+            var x = new List<ShowAsnser>();
+            var questions = exam.Questions;
+            var studnetAnsers = exam.Questions.Select(c => c.StudentAnswers).ToList();
             foreach (var item in exam.Questions)
             {
-
+                //x.Add(new ShowAsnser()
+                //{
+                //    Id = item.Id,
+                //    Answer= item.
+                //})
             }
             return Ok();
         }

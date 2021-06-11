@@ -27,7 +27,7 @@ namespace LMSbackend.Controllers
 
             //var user= Context.Users.Find(AuthoticateUserId());
 
-            //var transaction = Context.Database.BeginTransaction();
+            var transaction = Context.Database.BeginTransaction();
             try
             {
                 HomeWork c = new HomeWork()
@@ -44,10 +44,13 @@ namespace LMSbackend.Controllers
                 var stream = new FileStream(path, FileMode.Create);
                 homeWork.File.CopyToAsync(stream);
                 c.Path = path;
+                this.Context.Update(c);
+                transaction.Commit();
                 return Ok();
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
                 return BadRequest(new { ex.Message, exI = ex.InnerException.Message });
             }
         }
