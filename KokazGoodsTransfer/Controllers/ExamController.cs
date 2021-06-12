@@ -106,15 +106,22 @@ namespace LMSbackend.Controllers
         [HttpGet("GetCurrentExamForStudent")]
         public IActionResult GetCurrentExamForStudent([FromQuery] DateTimeDto dateTimedto)
         {
+
+            var userId = dateTimedto.UserId;
             var dateTime = new DateTime(dateTimedto.Year, dateTimedto.Month, dateTimedto.Day, dateTimedto.Hour, dateTimedto.Minit, 0);
             var exams = this.Context.Exams
                 .Include(c => c.Questions)
+                    .ThenInclude(c => c.StudentAnswers)
                 .ToList();
             var exam = exams
                 .Where(c => c.Date.Year == dateTime.Year && c.Date.Month == dateTime.Month && c.Date.Day == dateTime.Day).OrderBy(c => c.Date)
                 .FirstOrDefault();
             if (exam == null)
                 return Ok(false);
+            if (exam.Questions.Any(c => c.StudentAnswers.Any(c => c.StudentId == userId)))
+            {
+                return Conflict();
+            }
             ExamStudentDto examStudentDto = new ExamStudentDto()
             {
                 Id = exam.Id,
@@ -142,14 +149,14 @@ namespace LMSbackend.Controllers
         [HttpPost("Answer")]
         public IActionResult Answer([FromBody]List<AnswerQuestion> answerQuestion)
         {
-            var studnetId = AuthoticateUserId();
+            //var studnetId = AuthoticateUserId();
             foreach (var item in answerQuestion)
             {
                 StudentAnswer sa = new StudentAnswer()
                 {
                     Answer = item.Answer,
                     QuestionId = item.Id,
-                    StudentId = studnetId
+                    StudentId = item.UserId
                 };
                 this.Context.Add(sa);
             }
@@ -160,23 +167,25 @@ namespace LMSbackend.Controllers
         [HttpGet("GetAnswers/{id}")]
         public IActionResult GetAnswers(int id)
         {
-            var exam = this.Context.Exams
-                .Include(c => c.Questions)
-                    .ThenInclude(c => c.StudentAnswers)
-                        .ThenInclude(c => c.Student)
-                        .First(c => c.Id == id);
-            var x = new List<ShowAsnser>();
-            var questions = exam.Questions;
-            var studnetAnsers = exam.Questions.Select(c => c.StudentAnswers).ToList();
-            foreach (var item in exam.Questions)
+            var studnetAns = this.Context.StudentAnswers
+                .Include(c => c.Question)
+                    .ThenInclude(c => c.Exam)
+                .Include(c => c.Student)
+                .Where(c => c.Question.ExamId == id)
+                .ToList();
+            studnetAns = studnetAns.OrderBy(c => c.StudentId).ToList();
+            List<ShowAsnser> showAsnsers = new List<ShowAsnser>();
+            foreach (var item in studnetAns)
             {
-                //x.Add(new ShowAsnser()
-                //{
-                //    Id = item.Id,
-                //    Answer= item.
-                //})
+                showAsnsers.Add(new ShowAsnser()
+                {
+                    Answer = item.Answer,
+                    StudnetName = item.Student.Name,
+                    Question = item.Question.Question1,
+                    Valid= item.Answer== item.Question.Correct
+                }); ;
             }
-            return Ok();
+            return Ok(showAsnsers);
         }
 
     }

@@ -12,5 +12,6 @@ namespace LMSbackend.Dtos.ExamDto
         public int Day { get; set; }
         public int Hour { get; set; }
         public int Minit { get; set; }
+        public int UserId { get; set; }
     }
 }

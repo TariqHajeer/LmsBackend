@@ -1,12 +1,12 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [Lms]    Script Date: 6/11/2021 9:47:29 PM ******/
+/****** Object:  Database [Lms]    Script Date: 6/12/2021 8:40:40 PM ******/
 CREATE DATABASE [Lms]
  CONTAINMENT = NONE
  ON  PRIMARY 
 ( NAME = N'Lms', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\Lms.mdf' , SIZE = 5120KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'Lms_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\Lms_log.ldf' , SIZE = 1280KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'Lms_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\Lms_log.ldf' , SIZE = 1536KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
 ALTER DATABASE [Lms] SET COMPATIBILITY_LEVEL = 120
 GO
@@ -77,7 +77,7 @@ EXEC sys.sp_db_vardecimal_storage_format N'Lms', N'ON'
 GO
 USE [Lms]
 GO
-/****** Object:  Table [dbo].[Ads]    Script Date: 6/11/2021 9:47:31 PM ******/
+/****** Object:  Table [dbo].[Ads]    Script Date: 6/12/2021 8:40:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ CREATE TABLE [dbo].[Ads](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exam]    Script Date: 6/11/2021 9:48:18 PM ******/
+/****** Object:  Table [dbo].[Exam]    Script Date: 6/12/2021 8:40:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,7 +110,7 @@ CREATE TABLE [dbo].[Exam](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[HomeWork]    Script Date: 6/11/2021 9:48:18 PM ******/
+/****** Object:  Table [dbo].[HomeWork]    Script Date: 6/12/2021 8:40:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +126,7 @@ CREATE TABLE [dbo].[HomeWork](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 6/11/2021 9:48:18 PM ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 6/12/2021 8:40:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[Questions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 6/11/2021 9:48:18 PM ******/
+/****** Object:  Table [dbo].[StudentAnswers]    Script Date: 6/12/2021 8:40:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +163,7 @@ CREATE TABLE [dbo].[StudentAnswers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 6/11/2021 9:48:18 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 6/12/2021 8:40:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,19 +182,36 @@ CREATE TABLE [dbo].[User](
 GO
 SET IDENTITY_INSERT [dbo].[Exam] ON 
 
-INSERT [dbo].[Exam] ([Id], [Title], [Date], [Pwassowrd]) VALUES (8, N'سشيسش', CAST(N'2021-06-10T23:12:00.000' AS DateTime), N'')
+INSERT [dbo].[Exam] ([Id], [Title], [Date], [Pwassowrd]) VALUES (14, N'اخبار تجريبي', CAST(N'2021-06-12T16:00:00.000' AS DateTime), N'')
 SET IDENTITY_INSERT [dbo].[Exam] OFF
+SET IDENTITY_INSERT [dbo].[HomeWork] ON 
+
+INSERT [dbo].[HomeWork] ([Id], [Note], [UserId], [Path]) VALUES (16, N'sjdaflos l;ksa fdsa;l sad', 2, N'16.pdf')
+SET IDENTITY_INSERT [dbo].[HomeWork] OFF
 SET IDENTITY_INSERT [dbo].[Questions] ON 
 
-INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (10, 8, N'سؤال1', N'1', N'2', N'3', N'4', N'1', 1)
-INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (11, 8, N'سؤال2', N'1', N'2', N'3', N'4', N'2', 1)
-INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (12, 8, N'سؤال3', N'1', N'2', N'3', N'4', N'2', 1)
-INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (13, 8, N'سؤال4', N'1', N'2', N'3', N'4', N'4', 1)
+INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (22, 14, N'سؤال', N'منشستي', N'سمنتيشسيشسي', N'شسنمتيسشيلل', N'لاتبت', N'سمنتيشسيشسي', 1)
+INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (23, 14, N'مسنيتسشمنتي', N'منتسشينمتشسيشس', N'سنمتيسشيتشستي', N'سشنمتيسشنت', N'منشتسي', N'سنمتيسشيتشستي', 1)
+INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (24, 14, N'سؤال 3', N'c1', N'c2', N'c3', N'c4', N'c1', 1)
+INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (25, 14, N'سؤال4', N'c1', N'c2', N'c3', N'c4', N'c2', 1)
+INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (26, 14, N'سؤال5', N'c1', N'c2', N'c3', N'c4', N'c4', 1)
+INSERT [dbo].[Questions] ([Id], [ExamId], [Question], [Choise1], [Choise2], [Choise3], [Choise4], [Correct], [Time]) VALUES (27, 14, N'سؤال6', N'c1', N'c2', N'c3', N'c4', N'c3', 1)
 SET IDENTITY_INSERT [dbo].[Questions] OFF
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (2, 22, N'منشستي')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (2, 23, N'سنمتيسشيتشستي')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (2, 24, N'c2')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (2, 25, N'c2')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (2, 26, N'c2')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (2, 27, N'c2')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (3, 22, N'متشسي')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (3, 24, N'c2')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (3, 25, N'c3')
+INSERT [dbo].[StudentAnswers] ([StudentId], [QuestionId], [Answer]) VALUES (3, 26, N'c4')
 SET IDENTITY_INSERT [dbo].[User] ON 
 
 INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (1, N'سعد محسن', N'SaidMohsen', N'SaidMohsen123', 1)
-INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (2, N'طالب 1', N'student1', N'123', 0)
+INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (2, N'طالب1', N'student1', N'123', 0)
+INSERT [dbo].[User] ([Id], [Name], [Email], [Password], [IsAdmin]) VALUES (3, N'طالب2', N'studnet2', N'123', 0)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ALTER TABLE [dbo].[HomeWork]  WITH CHECK ADD  CONSTRAINT [FK_HomeWork_User] FOREIGN KEY([UserId])
 REFERENCES [dbo].[User] ([Id])

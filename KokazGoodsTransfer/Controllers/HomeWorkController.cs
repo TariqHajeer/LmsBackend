@@ -21,7 +21,7 @@ namespace LMSbackend.Controllers
         public HomeWorkController(LmsContext context, IMapper mapper) : base(context, mapper)
         {
         }
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
         public IActionResult Add([FromForm] AddHomeWork homeWork)
         {
 
@@ -43,8 +43,9 @@ namespace LMSbackend.Controllers
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "Files", c.Id.ToString() + "." + fileName[fileName.Length - 1]);
                 var stream = new FileStream(path, FileMode.Create);
                 homeWork.File.CopyToAsync(stream);
-                c.Path = path;
+                c.Path = c.Id.ToString() + "." + fileName[fileName.Length - 1];
                 this.Context.Update(c);
+                this.Context.SaveChanges();
                 transaction.Commit();
                 return Ok();
             }
@@ -70,6 +71,7 @@ namespace LMSbackend.Controllers
                     Note = item.Note,
                     //    File =item.Path  
                 };
+                
                 x.File= Path.Combine(Directory.GetCurrentDirectory(), "Files", item.Path);
                 getHomeWorks.Add(x);
             }
